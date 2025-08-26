@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.tca</groupId>
-  <artifactId>Ass09_Multiple_Database_and_entity_application</artifactId>
+  <artifactId>Ass17-HIB-V5</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Ass09_Multiple_Database_and_entity_application</name>
+  <name>Ass17-HIB-V5</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -29,29 +29,17 @@
   </dependencyManagement>
 
   <dependencies>
-  	
   	<dependency>
-	    <groupId>org.hibernate</groupId>
-	    <artifactId>hibernate-core</artifactId>
-	    <version>3.6.10.Final</version>
+	    <groupId>com.mysql</groupId>
+	    <artifactId>mysql-connector-j</artifactId>
+	    <version>8.4.0</version>
 	</dependency>
-  
+	  <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 	<dependency>
-    	<groupId>com.mysql</groupId>
-    	<artifactId>mysql-connector-j</artifactId>
-    	<version>8.4.0</version>
-	</dependency>
-	 
-  	<dependency>
-    	<groupId>javassist</groupId>
-    	<artifactId>javassist</artifactId>
-    	<version>3.12.1.GA</version>
-	</dependency>
-  
-  	<dependency>
-	    <groupId>org.postgresql</groupId>
-	    <artifactId>postgresql</artifactId>
-	    <version>42.7.7</version>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>6.6.27.Final</version>    
 	</dependency>
   
     <dependency>
