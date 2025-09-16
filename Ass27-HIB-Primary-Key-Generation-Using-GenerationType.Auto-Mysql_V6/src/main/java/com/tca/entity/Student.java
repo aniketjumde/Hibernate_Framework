@@ -4,20 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 public class Student 
 {
-//	@Id
-//	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-//	private int rno;
-//	private String name;
-//	private Double per;
-	
 	@Id
-	@SequenceGenerator(name="sg",sequenceName="tcaseq",allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="sg")
+	@TableGenerator(name="tg",table="mytab",pkColumnName="myid",pkColumnValue="101",valueColumnName="next_hi",initialValue=100,allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.IDENTITY,generator="tg")
 	private int rno;
 	private String name;
 	private Double per;

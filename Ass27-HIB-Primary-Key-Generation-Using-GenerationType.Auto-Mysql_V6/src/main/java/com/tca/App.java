@@ -26,8 +26,8 @@ public class App
     		
     		
     		Student student=new Student();
-    		student.setName("pradeep");
-    		student.setPer(75.78);
+    		student.setName("Pradeep");
+    		student.setPer(78.78);
     		
     		Integer rno=(Integer)session.save(student);
     		
