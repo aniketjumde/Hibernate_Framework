@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.tca.entity.Student;
-
+	
 public class App 
 {
     public static void main(String[] args) 
