@@ -1,6 +1,7 @@
 package com.tca;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -161,6 +162,7 @@ public class App
         	*/
         	
         	
+        	/*
         	//Test code 9: Where Clause
         	
         	
@@ -187,8 +189,95 @@ public class App
         		System.out.println("City       : "+s.getCity());
         		System.out.println("---------------------------------------");
         	}
+        	*/
         	
         	
+        	
+        	
+        	/* 
+		  	Topic : How to write a Dynamic SQL
+		  	
+		  	Solution:
+		  				1. Using Positonal paramter
+		  				2. Using Named Parameter
+		 		  				
+        	 */
+        	
+        	/*
+        	
+			Test-Code:1
+				
+        	// Dynamic SQL Using Positional Paramter
+    		
+    		Double d1 = 70.0;
+    		Double d2 = 80.0;
+    		
+    		Query<Student> query = session.createQuery("FROM Student WHERE per>=?1 AND per<= ?2",Student.class);	
+    		
+    		query.setParameter(1, d1);
+    		query.setParameter(2, d2);
+    		
+    		List<Student> L = query.list();
+        	
+        	for(Student s : L)
+    		{
+    			System.out.println("Roll Number : " + s.getRno());
+    			System.out.println("Name        : " + s.getName());
+    			System.out.println("Percentage  : " + s.getPer());
+    			System.out.println("City        : " + s.getCity());
+    			System.out.println("-----------------------------------------");
+    		}
+        	
+        	*/
+        	
+        
+        	
+        	/*
+        	 Test-Code:2
+
+        	
+        	// Dynamic Query using Named SQL
+        	
+        	Double d1=70.0;
+        	Double d2=80.0;
+        	
+        	Query<Student> query=session.createQuery("FROM Student WHERE per>= :minper AND per<= :maxper",Student.class);
+        	
+        	query.setParameter("minper", d1);
+        	query.setParameter("maxper", d2);
+        	
+        	List<Student> L = query.list();
+        	
+        	for(Student s : L)
+    		{
+    			System.out.println("Roll Number : " + s.getRno());
+    			System.out.println("Name        : " + s.getName());
+    			System.out.println("Percentage  : " + s.getPer());
+    			System.out.println("City        : " + s.getCity());
+    			System.out.println("-----------------------------------------");
+    		}
+        	 */
+        	
+        	/*
+        	
+        	Test-code:3
+        	//Update
+
+        	Query<?> query=session.createQuery("UPDATE Student set per=per+:val WHERE city=:tempcity");
+        	
+        	query.setParameter("val",5.0);
+        	query.setParameter("tempcity","MUMBAI");
+        	
+        	int rowCount=query.executeUpdate();
+    		System.out.println("No. of Recrods Updated : " + rowCount);
+			*/
+        	
+        	//Delete
+        	Query<?> query=session.createQuery("DELETE FROM Student WHERE city = :tempcity");
+        	query.setParameter("tempcity","MUMBAI");
+        	
+        	int rowCount = query.executeUpdate();
+    		System.out.println("No. of Recrods Deleted : " + rowCount);
         	
         	transaction.commit();
         	System.out.println("Work is Done.!!!");

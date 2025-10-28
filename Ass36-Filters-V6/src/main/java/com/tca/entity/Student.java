@@ -3,6 +3,8 @@ package com.tca.entity;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterDefs;
+import org.hibernate.annotations.Filters;
 import org.hibernate.annotations.ParamDef;
 
 import jakarta.persistence.Column;
@@ -13,6 +15,26 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="student")
+
+//@FilterDef(name="cityfilter", parameters = @ParamDef( name="tca", type = String.class))
+//@Filter(name="cityfilter",    condition  = "scity= :tca")
+
+//@FilterDef(name="perfilter",   parameters = @ParamDef(name="pqr", type = Double.class ) )
+//@Filter(name="perfilter", condition = "sper >= :pqr")
+
+
+@FilterDefs(
+			{
+				@FilterDef(name="cityfilter", parameters = @ParamDef( name="tca", type = String.class)),
+				@FilterDef(name="perfilter",   parameters = @ParamDef(name="pqr", type = Double.class ) )
+			}
+		  )
+
+@Filters(
+			{ 	@Filter(name="cityfilter",    condition  = "scity= :tca"),
+				@Filter(name="perfilter", condition = "sper >= :pqr")
+			}
+		)
 
 
 
