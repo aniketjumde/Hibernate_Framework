@@ -1,18 +1,13 @@
 package com.tca;
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import com.tca.entity.Student;
 
-import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.Root;
 
 public class App 
@@ -166,6 +161,8 @@ public class App
     		System.out.println("Maximum Percentage : " +  ans);
         	*/
         	
+        	/*
+        	
     		// Select city, count() from student group by city having count()>=2;
 
         	CriteriaBuilder cb=session.getCriteriaBuilder();
@@ -189,7 +186,41 @@ public class App
     			System.out.println(row[0] + " -->" + row[1]);
     		}
         			
+        	*/
         	
+        	/*
+        	
+        	//Update Student set city='Poona' Where city='PUNE'
+        	
+        	CriteriaBuilder cb=session.getCriteriaBuilder();
+        	CriteriaUpdate cu=cb.createCriteriaUpdate(Student.class);
+        	
+        	Root<Student> root=cu.from(Student.class);
+        	
+        	cu.set("city","POONA");
+        	cu.where(cb.equal(root.get("city"),"PUNE"));
+        	
+        	MutationQuery query=session.createMutationQuery(cu);
+        	
+        	int rowcount=query.executeUpdate();
+        	
+        	System.out.println("No.of.rows.Modified :"+rowcount);
+        	
+        	*/
+        	
+        	
+        	// DELETE FROM Student WHERE rno=1;
+        	
+        	CriteriaBuilder cb=session.getCriteriaBuilder();
+        	CriteriaDelete cd=cb.createCriteriaDelete(Student.class);
+        	
+        	Root<Student> root=cd.from(Student.class);
+        	cd.where(cb.equal(root.get("rno"), 109));
+        	
+        	int rowCount=session.createMutationQuery(cd).executeUpdate();
+        	
+        	System.out.println("No.of.rows.Remove :"+rowCount);
+
         	
         	transaction.commit();
         	System.out.println("Work is Done.!!!");
