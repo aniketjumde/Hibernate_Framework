@@ -64,4 +64,54 @@ public class App
  *  3)Table per Conquerete Mapping
  * 
  * 
+ *1) TABLE PER CLASS MAPPING 
+ *
+ *In table class per maaping Emplyee(Super class) inherit in Executive(base class)
+ *
+ *	Employee(id,name)
+ *		|							
+ *		|
+ *		|
+ *  Executive(role)
+ *  
+ *  +-----+---------------+
+| eid | ename | erole     |
++-----+-------+-----------+
+| 101 | AAA   | NULL      |
+| 102 | BBB   | Developer |
++-----+---------------+---
+
+Hya table varun apan kasa Segrigate karu ki ha data Emplyee cha ahe Or Executive cha ahe
+ha Problem Solve karnaya Sathi " @Discremater " Vaprun apan Segrigate karu Shakto
+
+
+Discremanator ha ek Colum Madhe Table Che name Deta ahe
+
++-----+---------------+-------+-----------+
+| eid | discremenater | ename | erole     |
++-----+---------------+-------+-----------+
+| 101 | EMPLOYEE      | AAA   | NULL      |
+| 102 | EXECUTIVE     | BBB   | Developer |
++-----+---------------+-------+-----------+
+
+ 
+ 
+ 1. Concept Recap
+
+In Table Per Class Mapping (Single Table Strategy):
+
+All parent and child class data is stored in one single table.
+
+The discriminator column helps Hibernate identify which row belongs to which class.
+
+This approach uses annotations like:
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
+@DiscriminatorColumn
+
+@DiscriminatorValue
+
+
+ 
 */

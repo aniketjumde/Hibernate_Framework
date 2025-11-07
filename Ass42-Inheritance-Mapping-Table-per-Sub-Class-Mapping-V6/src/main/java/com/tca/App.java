@@ -52,3 +52,26 @@ public class App
     	}
     }
 }
+
+/*
+ * Table Per SubClass Mapping
+ * 
+  It’s a way in Hibernate to store parent and child class
+  data in separate tables, but connect them using a common ID.
+  
++-----+-------+
+| eid | ename |
++-----+-------+
+| 101 | AAA   |
+| 102 | BBB   |
++-----+-------+
+
+ 
+ +-----+-----------+
+| eid | erole     |
++-----+-----------+
+| 102 | Developer |
++-----+-----------+
+ 
+ * 
+ */
