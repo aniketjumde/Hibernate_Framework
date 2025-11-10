@@ -29,8 +29,8 @@ public class App
     		session=sessionFactory.openSession();
     		transaction=session.beginTransaction();
     		
-    		
-    		//Initial have Same dept_id
+    		/*
+    		//Insert two Employee with one Department
     		
     		Department department=new Department();
     		department.setDid(111);
@@ -54,6 +54,105 @@ public class App
     		department.setEmps_list(emps);
     		
     		session.persist(department);
+    		
+    		*/
+    		
+    		
+    		/*
+    		//Adding Employee With dept_id=null
+    		
+    		Employee e=new Employee();
+    		e.setEid(102);
+    		e.setEname("BBB");
+    		e.setEsalary(8000.0);
+    		
+    		session.persist(e);
+    		*/
+    		
+    		
+    		//Update The Employee Dept_id AND Add one Dept id
+    		
+    		/*
+    		Department d=new Department();
+    		d.setDid(222);
+    		d.setDname("art");
+    		
+    		Employee e=session.get(Employee.class,102);
+    		d.setEmps_list(Arrays.asList(e));
+    		session.persist(d);
+    		*/
+    		
+    		/*
+    		Employee e=session.get(Employee.class,102);
+    		Department dep=session.get(Department.class,222);
+    		e.setDept(dep);
+    		//Setter Is internally call to update
+    		*/
+    		
+    		
+    		/* Add Employee Wise Department
+    		
+    		Department d=new Department();
+    		d.setDid(333);
+    		d.setDname("IT");
+    		
+    		Employee e=new Employee();
+    		e.setEid(104);
+    		e.setEname("DDD");
+    		e.setEsalary(5000.0);
+    		e.setDept(d);
+    		session.persist(e);
+    		
+    		*/
+    		/*
+    		
+    		//Fetch The Data DepartmentWise
+    		
+    		Department d=session.get(Department.class,111);
+    		System.out.println("Department Information :");
+    		System.out.println("Dept_id : "+d.getDid());
+    		System.out.println("Department name :"+d.getDname());
+    		
+    		System.out.println("------------------Employee Information :-------------------- ");
+    		List<Employee> L=d.getEmps_list();
+    		
+    		for(Employee e:L)
+    		{
+    			System.out.println("Emp id :"+e.getEid());
+    			System.out.println("Emp name :"+e.getEname());
+    			System.out.println("Emp salary :"+e.getEsalary());
+    			
+    		}
+    		*/
+    		
+    		/*
+    		//Fetch the Data EmployeeWise
+    		
+    		Employee e=session.get(Employee.class,101);
+    		
+    		System.out.println("Employee Inforamation : ");
+    		System.out.println("Emp id   : "+e.getEid());
+    		System.out.println("Emp name : "+e.getEname());
+    		System.out.println("Emp salary: "+e.getEsalary());
+    		System.out.println("Emp deapartment:"+e.getDept());
+    		
+    		Department d=e.getDept();
+    		System.out.println("----------------Department Information :----------------");
+    		System.out.println("Dept id :"+d.getDid());
+    		System.out.println("Dept name :"+d.getDname());
+    		
+    		*/
+    		
+    		/*
+    		// Updating the deptartment id
+    		Department d=session.get(Department.class,222);
+    		Employee e=session.get(Employee.class,104);
+    		e.setDept(d);
+    		*/
+    		
+    		//Deleting the Employee
+    		Employee e=session.get(Employee.class,103);
+    		session.remove(e);
     		
     		transaction.commit();
     		System.out.println("Work is Done !!!");

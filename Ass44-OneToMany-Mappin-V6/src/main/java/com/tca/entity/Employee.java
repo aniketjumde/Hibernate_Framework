@@ -18,7 +18,7 @@ public class Employee
 	private Double esalary;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="dept_id",nullable=false)
+	@JoinColumn(name="dept_id")
 	Department dept;
 
 	public Integer getEid() {
