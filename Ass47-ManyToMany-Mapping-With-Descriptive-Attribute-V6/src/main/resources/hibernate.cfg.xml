@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+<hibernate-configuration>
+
+<session-factory>
+
+	<!-- DataBase Configuration-->
+	<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hfb03</property>
+	<property name="hibernate.connection.username">root</property>
+	<property name="hibernate.connection.password">root</property>
+	
+	<!-- Hibernate configuration-->
+	<property name="hibernate.show_sql">true</property>
+	<property name="hibernate.format_sql">false</property>
+	<property name="hibernate.hbm2ddl.auto">none</property>
+	
+	<!-- Mapping-->
+	
+	<mapping class="com.tca.entities.Student"/>
+	<mapping class="com.tca.entities.Course"/>
+	<mapping class="com.tca.entities.StudentCourse"/>
+
+</session-factory>
+
+</hibernate-configuration>
