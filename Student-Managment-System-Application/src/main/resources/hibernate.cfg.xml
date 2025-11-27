@@ -23,7 +23,9 @@
 	
 	<!--Mapping Entity Class-->
 	<mapping class="com.tca.entity.Student"/>
-	
+	<mapping class="com.tca.entity.Course"/>
+	<mapping class="com.tca.entity.Registration"/>
+
 
 </session-factory>
 </hibernate-configuration>

@@ -3,8 +3,13 @@ package com.tca;
 import java.util.List;
 import java.util.Scanner;
 
+import com.tca.entity.Course;
 import com.tca.entity.Student;
+import com.tca.factory.CourseServiceFactory;
+import com.tca.factory.RegistrationServiceFactory;
 import com.tca.factory.StudentServiceFactory;
+import com.tca.service.CourseService;
+import com.tca.service.RegistrationService;
 import com.tca.service.StudentService;
 import com.tca.util.HibernateUtil;
 
@@ -12,6 +17,7 @@ public class SMSController
 {
 	public static void main(String args[])
 	{
+		//optionCancelRegistration();
 		
 		Scanner sc=new Scanner(System.in);
 		System.out.println("\n************** Welcome to Student Management Application ************ \n");
@@ -23,14 +29,25 @@ public class SMSController
 			{
 				System.out.println("Menu");
 				 
-	    		System.out.println("1. Save ");
-	    		System.out.println("2. Fetch By Id ");
-	    		System.out.println("3. Fetch By name ");
-	    		System.out.println("4. Fetch By city ");
-	    		System.out.println("5. Update ");
-	    		System.out.println("6. Delete ");
+	    		System.out.println("1. Save Student Record ");
+	    		System.out.println("2. Fetch Student By Id ");
+	    		System.out.println("3. Fetch Student By name ");
+	    		System.out.println("4. Fetch Student By city ");
+	    		System.out.println("5. Update Student");
+	    		System.out.println("6. Delete Student");
 	    		System.out.println("7. All Student ");
-	    		System.out.println("8. Exit ");
+	    		System.out.println("8. Add Course Information ");
+	    		System.out.println("9. All Course Information ");
+	    		System.out.println("10. Fetch Course By Id");
+	    		System.out.println("11.Fetch Course By Name");
+	    		System.out.println("12.Update Course Information");
+	    		System.out.println("13.Delete Course Information");
+	    		System.out.println("14. Register Student to Course");
+		        System.out.println("15. Get Student Details From Course");
+		        System.out.println("16. Get Course Details From Student");
+		        System.out.println("17. Cancel Registration");
+	    		System.out.println("18. Exit ");
+	    		
 	    		
 	    		System.out.print("What is your choice : ");
 	    	    int choice  = sc.nextInt();
@@ -56,8 +73,38 @@ public class SMSController
 						 	
 					case 7 :optionFecthAllStudent();
 							break;
+						
+					case 8 :optionAddCourse();
+							break;
 							
-					case 8 :
+					case 9 :optionFetchAllCourse();
+							break;
+					
+					case 10:optionFechCourseById();
+							break;
+					
+					case 11:optionFetchCourseByName();
+							break;
+					
+					case 12:optionModifyCourse();
+							break;
+							
+					case 13 :optionDeleteCourse();
+							break;
+							
+					case 14 :optionRegistration();
+							break;
+					
+					case 15 :optionGetStudentDetailsFromCourse();
+							 break;
+					
+					case 16 :optionGetCourseDetailsFromStudent();
+							 break;
+					
+					case 17 :optionCancelRegistration();
+							 break;
+		
+					case 18 :
 								HibernateUtil.closeSessionFactory();
 								System.out.println("********** Shutdown System ************* !!!");
 								System.exit(0);
@@ -79,12 +126,153 @@ public class SMSController
 			HibernateUtil.closeSessionFactory();
 
 		}
-	}
 	
-	private static void While(boolean b) {
-		// TODO Auto-generated method stub
 		
 	}
+	
+	
+
+	private static void optionCancelRegistration() 
+	{
+		RegistrationService service=RegistrationServiceFactory.getRegestrationServiceInstance();
+		Scanner sc=new Scanner(System.in);
+
+		try
+		{
+			System.out.print("Enter the Student id for cancel admission:");
+			Integer sid=sc.nextInt();
+			
+			System.out.print("Enter the Course Id for cancel admission :");
+			Integer cid=sc.nextInt();
+
+			boolean status =service.removeRegistration(sid, cid);
+			
+			if(status)
+			{
+				System.out.println("Registration Cancel Successfull.!!!");
+			}
+			else
+			{
+				System.out.println("Registration Not Found!!!");
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem During Registration Cnacelation !!!");
+			e.printStackTrace();
+			
+		}
+
+	}
+
+	
+	private static void optionRegistration() 
+	{
+		RegistrationService service=RegistrationServiceFactory.getRegestrationServiceInstance();
+		Scanner sc=new Scanner(System.in);
+
+		try
+		{
+			System.out.print("Enter the Student id:");
+			Integer sid=sc.nextInt();
+			
+			System.out.print("Enter the Course Id :");
+			Integer cid=sc.nextInt();
+
+			boolean status =service.addRegistration(sid, cid);
+			
+			if(status)
+			{
+				System.out.println("Registration Successfull.!!!");
+			}
+			else
+			{
+				System.out.println("Registration Failed.!!!");
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem During Registration !!!");
+			e.printStackTrace();
+			
+		}
+
+	}
+
+	private static void optionGetStudentDetailsFromCourse()
+	{
+		RegistrationService service=RegistrationServiceFactory.getRegestrationServiceInstance();
+		Scanner sc=new Scanner(System.in);
+		
+		try
+		{
+			
+			System.out.print("Enter the Course Id to find which Students are registered: ");
+			Integer cid=sc.nextInt();
+			
+			List<Student> list = service.fetchStudent(cid);
+
+			
+			if(list == null || list.isEmpty())
+			{
+			    System.out.println("No students found for this course.");
+			}
+			else
+			{
+			    System.out.println("Students registered in this course:");
+			    
+			    for(Student student : list)
+			    {
+			        System.out.println("ID: " +student.getRno()+", Name: " + student.getName() +", per: " + student.getPer());
+			    }
+			}
+
+				
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem during Registration Student for Course.!!!");
+		}
+	}
+	
+	private static void optionGetCourseDetailsFromStudent()
+	{
+		RegistrationService service=RegistrationServiceFactory.getRegestrationServiceInstance();
+		Scanner sc=new Scanner(System.in);
+		
+		try
+		{
+			
+			System.out.print("Enter the Student Id to find which Course are registered: ");
+			Integer sid=sc.nextInt();
+			
+			List<Course> list = service.fetchCourse(sid);
+
+			
+			if(list == null || list.isEmpty())
+			{
+			    System.out.println("No students found for this course.");
+			}
+			else
+			{
+			    System.out.println("Students registered in this course:");
+			    
+			    for(Course course : list)
+			    {
+			        System.out.println("ID: " +course.getCid()+", Course Name: " + course.getCname() +", Fees: " + course.getCfees());
+			    }
+			}
+
+				
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem during Registration Student for Course.!!!");
+		}
+	}
+
 
 	private static void optionSaveStudent()
 	{
@@ -408,6 +596,211 @@ public class SMSController
 		}
 		
 	}
+	
+	private static void optionAddCourse()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			System.out.print("Enter the Course Name : ");
+			String name=sc.nextLine();
+			
+			System.out.print("Enter the Course Fees : ");
+			Double fees=sc.nextDouble();
+			
+			Course course=new Course();
+			course.setCname(name);
+			course.setCfees(fees);
+			
+			Integer id=service.addCourse(course);
+			
+			if(id==null)
+			{
+				System.out.println("Unable to Save Course Information !!");
+			}
+			else
+			{
+				System.out.println("Course Information is Saved Succesfullly !!");
+				System.out.println("Course ID : "  + id);
+			}
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			System.out.println("Problem During Add Course .!!!");
+		}
+	}
+	
+	private static void optionFetchAllCourse()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			List<Course> courseRecord=service.fetchAllCourse();
+			
+			if(courseRecord==null)
+			{
+				System.out.println("Course Record Not Found !!!");
+			}
+			else
+			{
+				System.out.println("Course Information");
+				System.out.println("----------------------------");
+				System.out.println();
+				
+				for(Course course:courseRecord)
+				{
+					System.out.println("Course Id   : "+course.getCid());
+					System.out.println("Course Name : "+course.getCname());
+					System.out.println("Course fees : "+course.getCfees());
+					System.out.println();
 
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private static void optionFechCourseById()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			System.out.print("Enter the Roll Number to Get Data : ");
+			Integer rno=sc.nextInt();
+			
+			Course course=service.fetchCourseById(rno);
+			
+			if(course==null)
+			{
+				System.out.println("Course Record Not Found For Id :"+rno);
+			}
+			else
+			{
+				System.out.println("Course Information");
+				System.out.println("----------------------------");
+				
+				System.out.println("Course Id   : "+course.getCid());
+				System.out.println("Course Name : "+course.getCname());
+				System.out.println("Course fees : "+course.getCfees());
+				System.out.println();
+
+				
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+
+		}
+		
+	}
+
+	private static void optionFetchCourseByName()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			System.out.print("Enter the Course name to get the Data : ");
+			String name=sc.nextLine();
+			
+			List<Course> courseRecord=service.fetchCourseByName(name);
+			
+			if(courseRecord==null || courseRecord.isEmpty())
+			{
+				System.out.println("Course Record Not Found !!!");
+			}
+			else
+			{
+				System.out.println("Course Information");
+				System.out.println("----------------------------");
+				System.out.println();
+				
+				for(Course course:courseRecord)
+				{
+					System.out.println("Course Id   : "+course.getCid());
+					System.out.println("Course Name : "+course.getCname());
+					System.out.println("Course fees : "+course.getCfees());
+					System.out.println();
+
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
+	private static void optionModifyCourse()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			System.out.println("Enter the Course id to Modify Details : ");
+			Integer id=sc.nextInt();
+			
+			if(service.modifyCourseDetails(id))
+			{
+				System.out.println("Course Information Updated Successfully.!!!");
+			}
+			else
+			{
+				System.out.println("Unalbe to Updete Course Information !!!");
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem During Update the Course.!!!");
+		}
+	}
+	
+	
+	
+	private static void optionDeleteCourse()
+	{
+		Scanner sc=new Scanner(System.in);
+		CourseService service=CourseServiceFactory.getCourseServiceInstance();
+		
+		try
+		{
+			System.out.print("Enter Course Id : ");
+			int rno = sc.nextInt();
+			
+			boolean status = service.DeleteCourseDetails(rno);
+			
+			if(status)
+			{
+				System.out.println("Course is Deleted Successfully for Course Number : " +  rno);
+			}
+			else
+			{
+				System.out.println("Course Information not Found for Course Number : " +  rno);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problem during DeleteCourse !!");
+			e.printStackTrace();
+			
+		}
+		
+	}
 
 }
