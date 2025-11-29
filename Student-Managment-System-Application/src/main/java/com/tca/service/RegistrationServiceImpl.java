@@ -77,20 +77,9 @@ public class RegistrationServiceImpl implements RegistrationService
 	public boolean removeRegistration(Integer id, Integer cid) 
 	{
 		RegistrationDao registrationDao=RegistrationDaoFactory.getRegistrationDaoInstance();
-		StudentDao studentDao=StudentDaoFactory.getStudentDaoInstance();
-		CourseDao courseDao=CourseDaoFactory.getCourseDaoInstance();
 		
-		Student student=studentDao.findStudentById(id);
-		Course course=courseDao.fetchCourseById(cid);
+			return registrationDao.deleteRegistration(id, cid);
 		
-		if(student==null || course==null)
-		{
-			return false;
-		}
-		else
-		{
-			return registrationDao.deleteRegistration(student, course);
-		}
 
 	}
 

@@ -99,48 +99,40 @@ public class RegistrationDaoImpl implements RegistrationDao
 	}
 
 	@Override
-	public boolean deleteRegistration(Student student, Course course) 
+	public boolean deleteRegistration(Integer sid, Integer cid) 
 	{
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Transaction transaction=null;
-		try(Session session=sessionFactory.openSession())
-		{
-			transaction=session.beginTransaction();
-			
-			Student st=session.get(Student.class, student.getRno());
-			Course cr=session.get(Course.class, course.getCid());
-			
-			if(st == null || cr == null) 
-			{
-	            return false;
-	        }
-			
-	        String hql = "FROM Registration r WHERE r.student = :st AND r.course = :cr";  //Find the Record
-	        
-	        Query<Registration> query = session.createQuery(hql, Registration.class);
-	        
-	        query.setParameter("st",st);
-	        query.setParameter("cr", cr);
-	        Registration reg =query.uniqueResult();
-	        
-	        if(reg==null)
-	        {
-	        	return false;
-	        }
-	        
-	        session.remove(reg);  // renove registration for the Course
+		 SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		    Session session = null;
+		    Transaction tx = null;
 
-	        transaction.commit();
-	        return true;
-	        
+		    try {
+		        session = sessionFactory.openSession();
+		        tx = session.beginTransaction();
 
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return false;
+		        // Bulk delete ONLY the registration
+		        String hql = "DELETE FROM Registration r WHERE r.student.rno = :sid AND r.course.cid = :cid";
 
-		}
+		        int deletedRows = session.createQuery(hql)
+		                                 .setParameter("sid", sid)
+		                                 .setParameter("cid", cid)
+		                                 .executeUpdate();
+
+		        tx.commit();
+
+		        return deletedRows > 0;   // true if deletion happened
+		    } 
+		    catch (Exception e) 
+		    {
+		        if (tx != null) tx.rollback();
+		        e.printStackTrace();
+		        return false;
+		    } 
+		    finally 
+		    {
+		        if (session != null) session.close();
+		    }
 	}
+
+
 
 }
